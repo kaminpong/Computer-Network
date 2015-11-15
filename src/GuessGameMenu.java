@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 public class GuessGameMenu {
 
 	private JFrame frame;
+	
+	GuessGameMainPanel mainPanel = new GuessGameMainPanel();
 
 	/**
 	 * Launch the application.
@@ -36,14 +38,10 @@ public class GuessGameMenu {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.add(mainPanel);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JButton btnNewButton = new JButton("Play");
-		frame.getContentPane().add(btnNewButton, BorderLayout.WEST);
-		
-		JButton btnNewButton_1 = new JButton("Exit");
-		frame.getContentPane().add(btnNewButton_1, BorderLayout.EAST);
 	}
 
 }

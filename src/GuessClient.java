@@ -16,21 +16,6 @@ public class GuessClient {
 	private JLabel lblResult;
 	private JLabel lblNewLabel;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuessClient window = new GuessClient();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -63,6 +48,8 @@ public class GuessClient {
 		
 		lblNewLabel = new JLabel("Money: ");
 		frame.getContentPane().add(lblNewLabel, BorderLayout.EAST);
+		
+		frame.setVisible(true);
 		
 	}
 
