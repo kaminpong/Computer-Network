@@ -15,6 +15,8 @@ public class GuessGameHomePanel extends JPanel implements ActionListener{
 	
 	JButton playButton = new JButton("Play"), exitButton;
 	
+	final String ipAddress = "192.168.1.128";
+	
 	public GuessGameHomePanel() {
 		exitButton = new JButton("Exit");
 		playButton.addActionListener(this);
@@ -30,7 +32,7 @@ public class GuessGameHomePanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource()==playButton) {
-			Client client = new Client("192.168.1.128", 2000);
+			Client client = new Client(ipAddress, 2000);
 		}
 		else if (e.getSource()==exitButton) {
 			System.exit(0);
