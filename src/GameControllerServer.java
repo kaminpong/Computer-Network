@@ -17,6 +17,8 @@ private static GameControllerServer gameController = new GameControllerServer();
 	
 	static boolean gameEnd = false;
 	
+	GuessGameServer gameServer = GuessGameServer.getInstance();
+	
 	Client client;
 	MiniServer miniServer;
 	
@@ -56,7 +58,7 @@ private static GameControllerServer gameController = new GameControllerServer();
 	    }
 	    
 	    this.answer = result;
-	    System.out.println("Correct answer:"+this.answer);
+	    gameServer.appendText("Correct answer:"+this.answer);
 	}
 	
 	public boolean checkAnswer(String clientGuess, int numberOfTries) {
