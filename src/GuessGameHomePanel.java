@@ -17,7 +17,7 @@ public class GuessGameHomePanel extends JPanel implements ActionListener{
 		exitButton = new JButton("Exit");
 		playButton.addActionListener(this);
 		exitButton.addActionListener(this);
-		this.setPreferredSize(new Dimension(400,400));
+		this.setPreferredSize(new Dimension(1000,800));
 		this.setLayout(new GridLayout(1,3));
 		this.add(playButton);
 		this.add(new JPanel());
