@@ -37,9 +37,12 @@ public class GuessGame {
 	    		}	
 	    	}
 	    }
+	    
 	    String feedback = x+"A"+y+"B";
 	    
-	    System.out.println(feedback);
+	    //then send feedback back to client
+	    
+
 	    
 	}
 	
