@@ -8,22 +8,13 @@ public class GuessGameMenu {
 
 	private JFrame frame;
 	
-	GuessGameMainPanel mainPanel = new GuessGameMainPanel();
+	GuessGameMainPanel mainPanel = GuessGameMainPanel.getInstance();
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuessGameMenu window = new GuessGameMenu();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public static void main(String [] args) {
+		new GuessGameMenu();
 	}
 
 	/**
@@ -38,10 +29,12 @@ public class GuessGameMenu {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		mainPanel.add(new GuessGameHomePanel());
 		frame.add(mainPanel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 
 }

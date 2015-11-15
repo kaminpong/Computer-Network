@@ -1,17 +1,12 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JTextField;
 import java.awt.BorderLayout;
+
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-import javax.swing.JTextPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-public class GuessClient {
+public class GuessClient extends JPanel{
 
-	private JFrame frame;
 	private JTextField textField;
 	private JLabel lblResult;
 	private JLabel lblNewLabel;
@@ -28,28 +23,21 @@ public class GuessClient {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		this.setLayout(new BorderLayout());
 		textField = new JTextField();
-		frame.getContentPane().add(textField, BorderLayout.NORTH);
 		textField.setColumns(10);
 		
+		this.add(textField, BorderLayout.NORTH);
+		
 		JButton btnNewButton = new JButton("Submit");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		frame.getContentPane().add(btnNewButton, BorderLayout.CENTER);
+		this.add(btnNewButton, BorderLayout.CENTER);
 		
 		lblResult = new JLabel("Result: ");
-		frame.getContentPane().add(lblResult, BorderLayout.SOUTH);
+		this.add(lblResult, BorderLayout.SOUTH);
 		
 		lblNewLabel = new JLabel("Money: ");
-		frame.getContentPane().add(lblNewLabel, BorderLayout.EAST);
+		this.add(lblNewLabel, BorderLayout.EAST);
 		
-		frame.setVisible(true);
 		
 	}
 

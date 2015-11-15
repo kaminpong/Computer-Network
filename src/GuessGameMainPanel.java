@@ -1,36 +1,29 @@
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
-public class GuessGameMainPanel extends JPanel implements ActionListener{
+public class GuessGameMainPanel extends JPanel{
 	
-	JButton playButton, exitButton;
+	private static GuessGameMainPanel mainPanel = new GuessGameMainPanel();
 	
-	public GuessGameMainPanel() {
-		playButton = new JButton("Play");
-		exitButton = new JButton("Exit");
-		playButton.addActionListener(this);
-		exitButton.addActionListener(this);
-		this.setLayout(new GridLayout(1,3));
-		this.add(playButton);
-		this.add(new JPanel());
-		this.add(exitButton);
-		
+	
+	private GuessGameMainPanel() {
+		this.setLayout(new BorderLayout());
+	}
+	
+	public static GuessGameMainPanel getInstance() {
+		return mainPanel;
+	}
+	
+	
+	public void changeState(JPanel panel) {
+		this.setVisible(false);
+		this.removeAll();
+		this.add(panel, BorderLayout.CENTER);
+		this.setVisible(true);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getSource()==playButton) {
-			new GuessClient();
-		}
-		else if (e.getSource()==exitButton) {
-			System.exit(0);
-		}
-	}
+	
 
 }
