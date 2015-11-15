@@ -16,24 +16,25 @@ public class GuessGame {
 	    }
 	    Collections.shuffle(numbers);
 
-	    String result = "1234";
-	    /*for(int i = 0; i < 4; i++){
+	    String result = "";
+	    for(int i = 0; i < 4; i++){
 	        result += numbers.get(i).toString();
 	    }
-	    System.out.println(result);*/
+	    System.out.println(result);
 	    
 	    //Get client's guess from socket
 	    
-	    String clientguess="1243";
+	    String clientguess="";
+	    
 	    x=0;
 	    y=0;
+	    
 	    for(int i = 0;i<4;i++){
 	    	for(int j=0;j<4;j++){
 	    		if(clientguess.charAt(i)==result.charAt(j)){
 	    			if(i==j)x++;
 	    			if(i!=j)y++;
-	    		}
-	    			
+	    		}	
 	    	}
 	    }
 	    String feedback = x+"A"+y+"B";
