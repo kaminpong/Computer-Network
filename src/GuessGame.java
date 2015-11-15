@@ -6,6 +6,7 @@ public class GuessGame {
 	public static void main(String[] args) {
 		
 		int x,y,count;
+		count=10;
 		
 		//Generate the answer
 		
@@ -38,7 +39,7 @@ public class GuessGame {
 	    	}
 	    }
 	    
-	    String feedback = x+"A"+y+"B";
+	    String feedback = x+"A"+y+"B"+"      " + count-- + "tries left";
 	    
 	    //then send feedback back to client
 	    
