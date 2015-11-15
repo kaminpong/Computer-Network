@@ -33,9 +33,11 @@ public class GuessGameServer extends JPanel implements ActionListener{
 	String hostName;
 	ServerSocket serverSocket;
 	Server server;
+	String ipAddress;
+	int port;
 	
 	
-	final public static int PORT = 1234;
+	final public static int PORT = 2000;
 	
 	private static GuessGameServer serverMain = new GuessGameServer();
 	
@@ -84,8 +86,8 @@ public class GuessGameServer extends JPanel implements ActionListener{
 		this.createServer();
 	}
 	
-	public GuessGameServer getInstance() {
-		return this.serverMain;
+	public static GuessGameServer getInstance() {
+		return serverMain;
 	}
 	
 	public void createServer() {
@@ -105,6 +107,11 @@ public class GuessGameServer extends JPanel implements ActionListener{
 		}
 		
 	}
+	
+	public void setIPandPort(String ip, int port) {
+		this.ipAddress = ip;
+		this.port = port;
+	}
 	public void appendText(String text) {
 		String log = this.historyLog.getText()+"\n";
 		log += text;
@@ -116,6 +123,7 @@ public class GuessGameServer extends JPanel implements ActionListener{
 		JFrame frame = new JFrame();
 		frame.add(serverMain);
 		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
 	}

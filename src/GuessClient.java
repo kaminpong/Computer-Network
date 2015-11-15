@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class GuessClient extends JPanel implements ActionListener{
@@ -15,7 +16,7 @@ public class GuessClient extends JPanel implements ActionListener{
 	private JLabel lblNewLabel;
 	private JPanel inputsPanel = new JPanel();
 	private JPanel resultsPanel = new JPanel();
-	private JPanel numbersPanel = new JPanel();
+	JPanel numbersPanel = new JPanel();
 	ArrayList<JButton> buttons = new ArrayList<JButton>();
 	ArrayList<JButton> answers = new ArrayList<JButton>();
 	JButton deleteButton = new JButton("Delete");
@@ -26,6 +27,7 @@ public class GuessClient extends JPanel implements ActionListener{
 	JLabel result = new JLabel("");
 	int currentInput = 0;
 	
+	GameControllerClient gameController = GameControllerClient.getInstance();
 
 	/**
 	 * Create the application.
@@ -38,6 +40,7 @@ public class GuessClient extends JPanel implements ActionListener{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		amountOfMoney.setText(Integer.toString(gameController.amountOfMoney));
 		numbersPanel.setLayout(new GridLayout(2,5));
 		for (int i=0; i<10; i++) {
 			buttons.add(new JButton(Integer.toString(i)));
@@ -55,6 +58,7 @@ public class GuessClient extends JPanel implements ActionListener{
 		}
 		inputsPanel.add(deleteButton);
 		deleteButton.addActionListener(this);
+		submitButton.addActionListener(this);
 		
 		resultsPanel.setLayout(new GridLayout(2,2));
 		resultsPanel.add(moneyLabel);
@@ -97,7 +101,38 @@ public class GuessClient extends JPanel implements ActionListener{
 			currentInput = 0;
 		}
 		
+		if (e.getSource()==submitButton) {
+			if (gameController.numberOfTries>0) {
+				if (checkInputAnswer()) {
+					String answer = "";
+					for (int i=0; i<answers.size(); i++) {
+						answer+=answers.get(i).getText();
+					}
+					System.out.println(answer);
+					gameController.client.sendData("submit#"+answer+"#"+gameController.numberOfTries);
+				} else {
+					JOptionPane.showMessageDialog(this, "Incorrect inputs.");
+				}
+				
+			} else {
+				JOptionPane.showMessageDialog(this, "Gameover");
+			}
+			
+		}
 		
+		
+	}
+	
+	public boolean checkInputAnswer() {
+		boolean result = false;
+		for (int i=0; i<answers.size(); i++) {
+			if (answers.get(i).getText().length()>0) {
+				result = true;
+			} else {
+				result = false;
+			}
+		}
+		return result;
 	}
 
 }

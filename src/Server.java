@@ -25,9 +25,8 @@ public class Server {
 	public Server(ServerSocket serverSocket, GuessGameServer serverGUI){
 		serverGUI.appendText("Your IP = "+serverSocket.getInetAddress().getHostAddress());
 		serverGUI.appendText("Your Port = "+serverSocket.getLocalPort());
+		serverGUI.setIPandPort(serverSocket.getInetAddress().getHostAddress(), serverSocket.getLocalPort());
 		this.serverSocket = serverSocket;
-		//gc = MainFrame.gc;
-		//gc.isFirstPlayer = true;
 		serverThread = new Thread(){
 			public void run(){
 				while(!this.isInterrupted()){
@@ -38,6 +37,7 @@ public class Server {
 						miniServer = new MiniServer(socket);
 						miniServer.id = id++;
 						socketList.add(miniServer);
+						serverGUI.appendText("Current # player:"+socketList.size());
 						miniServer.server = Server.this;
 						miniServer.start();
 					} catch (IOException e) {

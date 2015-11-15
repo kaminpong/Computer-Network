@@ -11,6 +11,8 @@ public class GuessGameHomePanel extends JPanel implements ActionListener{
 	
 	GuessGameMainPanel mainPanel = GuessGameMainPanel.getInstance();
 	
+	//GuessGameServer serverMain = GuessGameServer.getInstance();
+	
 	JButton playButton = new JButton("Play"), exitButton;
 	
 	public GuessGameHomePanel() {
@@ -28,8 +30,7 @@ public class GuessGameHomePanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource()==playButton) {
-			GuessClient client = new GuessClient();
-			mainPanel.changeState(client);
+			Client client = new Client("192.168.1.128", 2000);
 		}
 		else if (e.getSource()==exitButton) {
 			System.exit(0);
