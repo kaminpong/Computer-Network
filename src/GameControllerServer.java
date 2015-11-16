@@ -121,9 +121,11 @@ public class GameControllerServer {
 			System.err.println("Only one player on server, no need to declare winner/loser");
 			return;
 		}
-		int[] arrayOfTries = new int[socketList.size()];				//number of tries by every player, 0 if not finish
+		int[] arrayOfTries = new int[socketList.size()];				//number of tries by every player, -1 if not finish
 		for(int i = 0; i<arrayOfTries.length;i++){
-			arrayOfTries[i] = socketList.get(i).numberOfTries;
+			if(socketList.get(i).correct){
+				arrayOfTries[i] = socketList.get(i).numberOfTries;
+			}else  arrayOfTries[i] = -1;		
 		}
 
 		Arrays.sort(arrayOfTries);
