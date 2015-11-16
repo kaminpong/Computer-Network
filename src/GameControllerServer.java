@@ -143,7 +143,7 @@ public class GameControllerServer {
 		}else{															//else normal win/lose notification
 			for (int i=0; i<socketList.size(); i++) {
 				if(socketList.get(i).numberOfTries==highestScore){
-					socketList.get(i).sendData("winner#");
+					socketList.get(i).sendData("winner#"+socketList.size());
 				} 
 				else socketList.get(i).sendData("lose#");
 			}

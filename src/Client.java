@@ -90,10 +90,10 @@ public class Client{
 				gameController.updateResult(d[1]);
 				break;
 			case "lose":
-				JOptionPane.showMessageDialog(mainPanel, "You LOSE!!! olo");
+				JOptionPane.showMessageDialog(mainPanel, "You Lose!\nYou owe me 10 NTD");
 				break;
 			case "winner":
-				JOptionPane.showMessageDialog(mainPanel, "You're the Winner!!!");
+				JOptionPane.showMessageDialog(mainPanel, "You're the Winner!\n You get "+Integer.parseInt(d[1])*10+" NTD");
 				break;
 			case "draw":		// >1 player get the highest score
 				JOptionPane.showMessageDialog(mainPanel, "No winner");
