@@ -20,8 +20,8 @@ public class MiniServer extends Thread{
 	GameControllerServer gameController = GameControllerServer.getInstance();
 	
 	int id = 0;
-	public boolean correct;	//BECOME TRUE IF CLIENT ANSWERS CORRECTLY
-							//TODO, RESET TO FALSE WHEN START NEXT GAME!!
+	public boolean correct = false;	//BECOME TRUE IF CLIENT ANSWERS CORRECTLY
+									//TODO, RESET TO FALSE WHEN START NEXT GAME!!
 	public int numberOfTries = 10;
 	
 	public MiniServer(Socket socket){
@@ -78,7 +78,6 @@ public class MiniServer extends Thread{
 					correct = true;
 				} else {
 					sendData("tryagain#"+gameController.feedback);
-					
 				}
 				
 				break;

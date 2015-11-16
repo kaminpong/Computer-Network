@@ -123,14 +123,19 @@ public class GameControllerServer {
 		}
 		int[] arrayOfTries = new int[socketList.size()];				//number of tries by every player, -1 if not finish
 		for(int i = 0; i<arrayOfTries.length;i++){
-			if(socketList.get(i).correct){
-				arrayOfTries[i] = socketList.get(i).numberOfTries;
-			}else  arrayOfTries[i] = -1;		
+			MiniServer ms = socketList.get(i);
+			if(ms.correct){
+				arrayOfTries[i] = ms.numberOfTries;
+			}else{
+				ms.numberOfTries = -1;
+				arrayOfTries[i] = -1;
+			}		
 		}
 
 		Arrays.sort(arrayOfTries);
-		JOptionPane.showMessageDialog(null, "arrayOfTries: "+Arrays.toString(arrayOfTries));
-		int highestScore = arrayOfTries[arrayOfTries.length-1];	
+		
+		int highestScore = arrayOfTries[arrayOfTries.length-1];
+		JOptionPane.showMessageDialog(null, "arrayOfTries: "+Arrays.toString(arrayOfTries)+" highest: "+highestScore);
 		if(arrayOfTries[arrayOfTries.length-2] == highestScore){		//if second place also get the same score as first place, declare no winner
 			for (int i=0; i<socketList.size(); i++){
 				socketList.get(i).sendData("draw#");
