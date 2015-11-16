@@ -127,10 +127,12 @@ public class GameControllerServer {
 		}
 
 		Arrays.sort(arrayOfTries);
-		//JOptionPane.showMessageDialog(null, "arrayOfTries: "+Arrays.toString(arrayOfTries));
+		JOptionPane.showMessageDialog(null, "arrayOfTries: "+Arrays.toString(arrayOfTries));
 		int highestScore = arrayOfTries[arrayOfTries.length-1];	
 		if(arrayOfTries[arrayOfTries.length-2] == highestScore){		//if second place also get the same score as first place, declare no winner
-			for (int i=0; i<socketList.size(); i++) socketList.get(i).sendData("draw#");		//TODO, REQUEST REPLAY IF NO WINNER?
+			for (int i=0; i<socketList.size(); i++){
+				socketList.get(i).sendData("draw#");
+			} 		//TODO, REQUEST REPLAY IF NO WINNER?
 		}else{															//else normal win/lose notification
 			for (int i=0; i<socketList.size(); i++) {
 				if(socketList.get(i).numberOfTries==highestScore){
