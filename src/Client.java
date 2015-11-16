@@ -71,7 +71,8 @@ public class Client{
 	}
 	
 	public void decipherData(String data) {
-		System.out.println(data);
+		System.out.println("Client received: "+data);
+	//	JOptionPane.showMessageDialog(mainPanel, "Client received: "+data,"DEBUG",JOptionPane.INFORMATION_MESSAGE);
 		String[] d = data.split("#");
 		
 		switch(d[0]) {
@@ -93,6 +94,9 @@ public class Client{
 				break;
 			case "winner":
 				JOptionPane.showMessageDialog(mainPanel, "You're the Winner!!!");
+				break;
+			case "draw":		// >1 player get the highest score
+				JOptionPane.showMessageDialog(mainPanel, "No winner");
 				break;
 			default:
 				break;

@@ -20,7 +20,9 @@ public class MiniServer extends Thread{
 	GameControllerServer gameController = GameControllerServer.getInstance();
 	
 	int id = 0;
-	
+	public boolean correct;	//BECOME TRUE IF CLIENT ANSWERS CORRECTLY
+							//TODO, RESET TO FALSE WHEN START NEXT GAME!!
+	public int numberOfTries = 10;
 	
 	public MiniServer(Socket socket){
 		gameController.linkMiniServer(this);
@@ -69,11 +71,11 @@ public class MiniServer extends Thread{
 				}
 				break;
 			case "submit":
-				boolean check = gameController.checkAnswer(d[1],Integer.parseInt(d[2]));
+				boolean check = gameController.checkAnswer(d[1],Integer.parseInt(d[2]),this);
 				if (check) {
 					System.out.println("IN");
 					sendData("correct#");
-					gameController.correct = true;
+					correct = true;
 				} else {
 					sendData("tryagain#"+gameController.feedback);
 					

@@ -14,7 +14,7 @@ public class GameControllerClient {
 	
 	boolean gameOver = false;
 	
-	boolean correct = false;
+	//boolean correct = false;
 	
 	Client client;
 	MiniServer miniServer;
@@ -36,7 +36,7 @@ public class GameControllerClient {
 	}
 	
 	public void waitForEndGame() {
-		this.correct = true;
+		//this.correct = true;
 		for (int i=0; i<client.clientGUI.buttons.size(); i++) {
 			client.clientGUI.buttons.get(i).setEnabled(false);
 		}

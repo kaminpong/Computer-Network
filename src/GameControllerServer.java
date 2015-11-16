@@ -1,31 +1,34 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+
+import javax.swing.JOptionPane;
 
 
 public class GameControllerServer {
-private static GameControllerServer gameController = new GameControllerServer();
-	
+	private static GameControllerServer gameController = new GameControllerServer();
+
 	static boolean gameStart = false;
-	
+
 	static String answer;
-	
+
 	static String feedback = "";
-	
-	int numberOfTries = 10;
-	
-	boolean correct = false; 
-	
+
+	//int numberOfTries = 10;
+
+
+
 	static boolean gameEnd = false;
-	
+
 	GuessGameServer gameServer = GuessGameServer.getInstance();
-	
+
 	Client client;
 	MiniServer miniServer;
-	
+
 	private GameControllerServer() {
-		
+
 	}
-	
+
 	public static GameControllerServer getInstance() {
 		return gameController;
 	}
@@ -33,7 +36,7 @@ private static GameControllerServer gameController = new GameControllerServer();
 	public void linkMiniServer(MiniServer miniServer) {
 		this.miniServer = miniServer;
 	}
-	
+
 	public boolean startTheGame() {
 		if (!gameStart) {
 			gameStart = true;
@@ -43,54 +46,54 @@ private static GameControllerServer gameController = new GameControllerServer();
 			return false;
 		}
 	}
-	
+
 	public void generateAnswer() {
 		ArrayList<Integer> numbers = new ArrayList<>();
-	    
-	    for(int i = 0; i < 10; i++){
-	        numbers.add(i);
-	    }
-	    Collections.shuffle(numbers);
 
-	    String result = "";
-	    for(int i = 0; i < 4; i++){
-	        result += numbers.get(i).toString();
-	    }
-	    
-	    this.answer = result;
-	    gameServer.appendText("Correct answer:"+this.answer);
+		for(int i = 0; i < 10; i++){
+			numbers.add(i);
+		}
+		Collections.shuffle(numbers);
+
+		String result = "";
+		for(int i = 0; i < 4; i++){
+			result += numbers.get(i).toString();
+		}
+
+		this.answer = result;
+		gameServer.appendText("Correct answer:"+this.answer);
 	}
-	
-	public boolean checkAnswer(String clientGuess, int numberOfTries) {
-		    
-		    int x=0;
-		    int y=0;
-		    
-		    for(int i = 0;i<4;i++){
-		    	for(int j=0;j<4;j++){
-		    		if(clientGuess.charAt(i)==answer.charAt(j)){
-		    			if(i==j)x++;
-		    			if(i!=j)y++;
-		    		}	
-		    	}
-		    }
-		    this.numberOfTries = --numberOfTries;
-		    String feedback = x+"A"+y+"B"+"      " + this.numberOfTries + "tries left";
-		    this.feedback = feedback;
-		    System.out.println(feedback);
-		  
-		    if (x==4) {
-		    	return true;
-		    } else {
-		    	return false;
-		    }
+
+	public boolean checkAnswer(String clientGuess, int numberOfTries, MiniServer ms) {
+
+		int x=0;
+		int y=0;
+
+		for(int i = 0;i<4;i++){
+			for(int j=0;j<4;j++){
+				if(clientGuess.charAt(i)==answer.charAt(j)){
+					if(i==j)x++;
+					if(i!=j)y++;
+				}	
+			}
+		}
+		ms.numberOfTries--;
+		String feedback = x+"A"+y+"B"+"      " + ms.numberOfTries + "tries left";
+		GameControllerServer.feedback = feedback;
+		System.out.println(feedback);
+
+		if (x==4) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-	
+
 	public void checkAllClients() {
 		ArrayList<MiniServer> socketList = miniServer.server.socketList;
 		int finishedPlayer = 0;
 		for (int i=0; i<socketList.size(); i++) {
-			if(socketList.get(i).gameController.numberOfTries==0 || socketList.get(i).gameController.correct) {
+			if(socketList.get(i).numberOfTries==0 || socketList.get(i).correct) {
 				finishedPlayer++;
 			}
 		}
@@ -98,43 +101,43 @@ private static GameControllerServer gameController = new GameControllerServer();
 			endTheGame();
 		}
 	}
-	
+
 	public boolean compareScore(MiniServer a, MiniServer b) {
-		if (a.gameController.numberOfTries<b.gameController.numberOfTries) {
+		if (a.numberOfTries<b.numberOfTries) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public void endTheGame() {
 		ArrayList<MiniServer> socketList = miniServer.server.socketList;
-		ArrayList<MiniServer> correctPlayers = new ArrayList<MiniServer>();
-		MiniServer winner = null;
-		for (int i=0; i<socketList.size(); i++) {
-			if(socketList.get(i).gameController.correct) {
-				System.out.println("IN");
-				correctPlayers.add(socketList.get(i));
-			}
+		
+		if(socketList==null||socketList.isEmpty()){
+			System.err.println("socketList is null or empty");
+			return;
 		}
-		if (correctPlayers.size()>0) {
-			for (int i=0; i<correctPlayers.size(); i++) {
-				if (i==0) {
-					winner = correctPlayers.get(i);
-				} else {
-					if (!compareScore(winner,correctPlayers.get(i))) {
-						winner = correctPlayers.get(i);
-					}
-				}
-			}
-			winner.sendData("winner#");
-			socketList.remove(winner);
+		if(socketList.size()==1){
+			System.err.println("Only one player on server, no need to declare winner/loser");
+			return;
+		}
+		int[] arrayOfTries = new int[socketList.size()];				//number of tries by every player, 0 if not finish
+		for(int i = 0; i<arrayOfTries.length;i++){
+			arrayOfTries[i] = socketList.get(i).numberOfTries;
+		}
+
+		Arrays.sort(arrayOfTries);
+		//JOptionPane.showMessageDialog(null, "arrayOfTries: "+Arrays.toString(arrayOfTries));
+		int highestScore = arrayOfTries[arrayOfTries.length-1];	
+		if(arrayOfTries[arrayOfTries.length-2] == highestScore){		//if second place also get the same score as first place, declare no winner
+			for (int i=0; i<socketList.size(); i++) socketList.get(i).sendData("draw#");		//TODO, REQUEST REPLAY IF NO WINNER?
+		}else{															//else normal win/lose notification
 			for (int i=0; i<socketList.size(); i++) {
-				socketList.get(i).sendData("lose#");
+				if(socketList.get(i).numberOfTries==highestScore){
+					socketList.get(i).sendData("winner#");
+				} 
+				else socketList.get(i).sendData("lose#");
 			}
-		} else {
-			System.out.println("DRAW!!!");
-		}
+		}	
 	}
-	
 }
