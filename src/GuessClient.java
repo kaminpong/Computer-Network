@@ -61,8 +61,8 @@ public class GuessClient extends JPanel implements ActionListener{
 		submitButton.addActionListener(this);
 		
 		resultsPanel.setLayout(new GridLayout(2,2));
-		resultsPanel.add(moneyLabel);
-		resultsPanel.add(amountOfMoney);
+		//resultsPanel.add(moneyLabel);
+		//resultsPanel.add(amountOfMoney);
 		resultsPanel.add(resultLabel);
 		resultsPanel.add(result);
 		

@@ -135,7 +135,7 @@ public class GameControllerServer {
 		Arrays.sort(arrayOfTries);
 		
 		int highestScore = arrayOfTries[arrayOfTries.length-1];
-		JOptionPane.showMessageDialog(null, "arrayOfTries: "+Arrays.toString(arrayOfTries)+" highest: "+highestScore);
+		//JOptionPane.showMessageDialog(null, "arrayOfTries: "+Arrays.toString(arrayOfTries)+" highest: "+highestScore);
 		if(arrayOfTries[arrayOfTries.length-2] == highestScore){		//if second place also get the same score as first place, declare no winner
 			for (int i=0; i<socketList.size(); i++){
 				socketList.get(i).sendData("draw#");

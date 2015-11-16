@@ -15,7 +15,7 @@ public class GuessGameHomePanel extends JPanel implements ActionListener{
 	
 	JButton playButton = new JButton("Play"), exitButton;
 	
-	final String ipAddress = "172.17.0.104";
+	final String ipAddress = "10.20.14.120";
 	
 	public GuessGameHomePanel() {
 		exitButton = new JButton("Exit");
